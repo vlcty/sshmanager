@@ -26,9 +26,4 @@ sub getScoresAsLongAsString {
 	return $result;
 }
 
-sub dieInRedColor {
-	my $message = shift;
-	die(colored($message,'red'));
-}
-
 1;
