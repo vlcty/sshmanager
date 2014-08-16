@@ -60,7 +60,7 @@ sub parseOptions {
 	$verbose = 1 if ( $debug );
 
 	dieInRedColor("Didn't get an endpoint. Please use the --endpoint option!\n") if ( length($endpoint) == 0 );
-	dieInRedColor("Didn't get an URI. Please use the --uri option!\n") if ( length($location) == 0 );
+	dieInRedColor("Didn't get an URI. Please use the --location option!\n") if ( length($location) == 0 );
 }
 
 sub printPrologue {
