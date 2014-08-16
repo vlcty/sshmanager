@@ -17,6 +17,7 @@ our $endpoint = '';
 our $location = '';
 our $version = "1.0";
 our $debug = 0;
+our $createSSHDirectory = 0;
 
 # Resources
 our @systemUsers;
@@ -53,7 +54,8 @@ sub parseOptions {
 		"endpoint=s" => \$endpoint,
 		"location=s" => \$location,
 		"dry" => \$dry,
-		"debug" => \$debug
+		"debug" => \$debug,
+		"create-ssh-directory" => \$createSSHDirectory
 	);
 
 	$verbose = 1 if ( $dry );
@@ -98,6 +100,7 @@ sub printDebugInformation {
 	print("Location: $location\n");
 	print("Version: $version\n");
 	print("Debug: $debug\n");
+	printf("Create .ssh Directory: %s\n", ( $createSSHDirectory ) ? 'yes' : 'no' );
 	print("\n");
 }
 
@@ -181,7 +184,12 @@ sub distributeForThisHost {
 		printf(colored("Doing keys for user %s:\n",'bold white'), $user->getUsername()) if ( $verbose );
 		my @keysToWrite;
 
-		# Is it even possible?
+		if ( ! $user->hasSSHDirectory() && $createSSHDirectory ) {
+			print("Create .ssh directory\n");
+			$user->createSSHDirectory();
+			die(colored("Was not able to create a .ssh directory\n",'red')) if ( ! $user->hasSSHDirectory() );
+		}
+
 		die(colored("Not able to distribute keys because the user has no .ssh directory\n", 'red')) if ( ! $user->hasSSHDirectory() );
 
 		# Get the single keys

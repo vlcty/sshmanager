@@ -34,6 +34,17 @@ sub hasSSHDirectory {
 	return 0;
 }
 
+sub createSSHDirectory {
+	my ( $self ) = @_;
+
+	return 0 if ( ! $self->hasSSHDirectory() );
+
+	system(sprintf("mkdir %s/.ssh", $self->getHomeDir()));
+	system(sprintf("chown 600 %s/.ssh", $self->getHomeDir()));
+
+	return 1;
+}
+
 sub getSystemUsers {
 	my @users;
 
