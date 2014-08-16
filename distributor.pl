@@ -61,8 +61,8 @@ sub parseOptions {
 	$verbose = 1 if ( $dry );
 	$verbose = 1 if ( $debug );
 
-	dieInRedColor("Didn't get an endpoint. Please use the --endpoint option!\n") if ( length($endpoint) == 0 );
-	dieInRedColor("Didn't get an URI. Please use the --location option!\n") if ( length($location) == 0 );
+	die(colored("Didn't get an endpoint. Please use the --endpoint option!\n",'red')) if ( length($endpoint) == 0 );
+	die(colored("Didn't get an URI. Please use the --location option!\n",'red')) if ( length($location) == 0 );
 }
 
 sub printPrologue {
@@ -106,7 +106,7 @@ sub printDebugInformation {
 
 sub checkForRootPrivileges {
 	if ( $< != 0 ) {
-		dieInRedColor("This script has to run with root privileges in order to work correctly!\n");
+		die(colored("This script has to run with root privileges in order to work correctly!\n",'red'));
 	}
 }
 
@@ -116,7 +116,7 @@ sub determineHostname {
 		chomp($hostname);
 	}
 	
-	dieInRedColor("Was not able to retrieve a hostname. Try using the --hostname option!\n") if ( length($hostname) == 0 );
+	die(colored("Was not able to retrieve a hostname. Try using the --hostname option!\n",'red')) if ( length($hostname) == 0 );
 	printf(colored("Hostname: $hostname\n",'bold white')) if ( $verbose );
 }
 
@@ -234,7 +234,7 @@ sub getSystemuser {
 		return $currentUser if ( $currentUser->getUsername() eq $name );
 	}
 
-	dieInRedColor(sprintf("No user with the name %s exists on this system\n", $name));
+	die(colored(sprintf("No user with the name %s exists on this system\n", $name),'red'));
 }
 
 sub printKeysWhichWouldBeWrittenToAuthorizedKeysFile {
@@ -272,7 +272,7 @@ sub getKeyForAlias {
 		return $currentKey if ( $currentKey->getAlias() eq $keyAlias );
 	}
 
-	dieInRedColor("Was not able to find a key for alias $keyAlias\n");
+	die(colored("Was not able to find a key for alias $keyAlias\n"),'');
 }
 
 sub getKeysForGroup {
@@ -298,7 +298,7 @@ sub getNodeForThisHost {
 		return $currentHost if ( $currentHost->getAttribute('name') eq $hostname );
 	}
 
-	dieInRedColor("No node for this host found :-(\n");
+	die(colored("No node for this host found :-(\n",'red'));
 }
 
 sub retrieveXML {
@@ -309,7 +309,7 @@ sub retrieveXML {
 		return readXMLViaHTTP();
 	}
 	else {
-		dieInRedColor("Endpoint $endpoint can't be handled.\n");
+		die(colored("Endpoint $endpoint can't be handled.\n",'yes'));
 	}
 }
 
@@ -330,7 +330,7 @@ sub readXMLViaHTTP {
 	$userAgent->agent("sshmanager distribution script v$version");
 
 	my $response = $userAgent->get($location);
-	dieInRedColor("Was not able to fetch the XML via HTTP under '$location'.\n") if ( ! $response->is_success );
+	die(colored("Was not able to fetch the XML via HTTP under '$location'.\n",'yes')) if ( ! $response->is_success );
 	$response = $response->decoded_content;
 
 	return $response;

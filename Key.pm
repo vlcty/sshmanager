@@ -1,6 +1,6 @@
 package Key;
 use strict;
-use SSHManager qw(trim dieInRedColor);
+use SSHManager qw(trim);
 
 sub new {
 	my $class = shift;
