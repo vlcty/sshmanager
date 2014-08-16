@@ -1,13 +1,17 @@
 #!/usr/bin/perl
+BEGIN {
+	push(@INC, 'SSHManager/');
+}
+
 use strict;
 use XML::LibXML;
 use Getopt::Long;
 use LWP::UserAgent;
 use Term::ANSIColor;
-use Systemuser;
-use Key;
-use Group;
-use SSHManager;
+use SSHManager::Systemuser;
+use SSHManager::Key;
+use SSHManager::Group;
+use SSHManager::SSHManager;
 
 # Config
 our $verbose = 0;
@@ -218,7 +222,7 @@ sub distributeForThisHost {
 sub printEndmessage {
 	my $message = ( $dry ) ? 'Keys would be distributed as honest as possible' : 'Keys as honest as possible distributed!';
 
-	my $scores = getScoresAsLongAsString($message);
+	my $scores = SSHManager::getScoresAsLongAsString($message);
 
 	print("\n");
 	print(colored($scores,'green')."\n");
