@@ -174,6 +174,14 @@ Dry-run
 To test out config files you can do a dry run. The application behave exactly like on a normal run. Verbose output is turned on.
 You can trigger a dry run by adding ``--dry``
 
+Cron
+====
+
+The best way to trigger the application is via cron or a cron replacement. I added the following job in ``/etc/crontab``.
+
+``*/30	*	*	*	*	root	( cd /home/veloc1ty/workspaces/perl/sshmanager; perl distributor.pl --endpoint "http" --location "http://files.veloc1ty.de/sshKeys/config.xml"``
+
+It is necessary to ``cd`` first into the project location so the application find the required modules.
 
 Dependencies
 ============
