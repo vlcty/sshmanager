@@ -157,7 +157,8 @@ The following command line options can be used:
 - location => Where is the file located
 - hostname => Manually set the hostname
 - dry => Turn on dry mode. See "Dry-run"
-- verbose => Turn on verbose output 
+- verbose => Turn on verbose output
+- create-ssh-directory => Create the .ssh directory if it is nonexistent
 - debug => Show variable values
 
 Endpoint and location are mandatory.
