@@ -5,7 +5,7 @@ require Exporter;
 use strict;
 
 our @ISA = qw(Exporter);
-our @EXPORT = qw(trim getScoresAsLongAsString dieInRedColor);
+our @EXPORT = qw(trim getScoresAsLongAsString);
 
 sub trim {
 	my $input = shift;
