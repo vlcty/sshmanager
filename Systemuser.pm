@@ -40,7 +40,12 @@ sub createSSHDirectory {
 	return 0 if ( ! $self->hasSSHDirectory() );
 
 	system(sprintf("mkdir %s/.ssh", $self->getHomeDir()));
-	system(sprintf("chown 600 %s/.ssh", $self->getHomeDir()));
+	system(sprintf("chown %s:%s %s",
+		$self->getUsername(),
+		$self->getUsername(),
+		$self->getHomeDir()
+		));
+	system(sprintf("chmod 600 %s/.ssh", $self->getHomeDir()));
 
 	return 1;
 }
