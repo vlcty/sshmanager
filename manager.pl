@@ -22,7 +22,7 @@ sub parseArguments {
 }
 
 sub installCronScript {
-	checkForRootPrivileges();
+	die(colored("You need root access to add a new crontab fragment\n",'red')) if ( ! SSHManager::applicationRunsWithRootRights() );
 
 	my $distributorPath = getUserInput("Full path to distributor.pl","^.*distributor.pl\$");
 	my $executionInterval = getUserInput("Execution interval in minutes", "^[0-9]{1,2}\$");
@@ -37,12 +37,8 @@ EOS
 	open(CRONFRAGMENT, ">/etc/cron.d/sshmanager");
 	print CRONFRAGMENT $fileContent;
 	close(CRONFRAGMENT);
-}
 
-sub checkForRootPrivileges {
-	if ( $< != 0 ) {
-		die(colored("This script has to run with root privileges in order to work correctly!\n",'red'));
-	}
+	print("Done!\n");
 }
 
 sub getUserInput {

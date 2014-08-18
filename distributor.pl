@@ -109,9 +109,7 @@ sub printDebugInformation {
 }
 
 sub checkForRootPrivileges {
-	if ( $< != 0 ) {
-		die(colored("This script has to run with root privileges in order to work correctly!\n",'red'));
-	}
+	die(colored("This script has to run with root privileges in order to work correctly!\n",'red')) if ( ! SSHManager::applicationRunsWithRootRights() );
 }
 
 sub determineHostname {

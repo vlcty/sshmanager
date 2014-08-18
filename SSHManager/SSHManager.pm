@@ -5,7 +5,7 @@ require Exporter;
 use strict;
 
 our @ISA = qw(Exporter);
-our @EXPORT = qw(trim getScoresAsLongAsString);
+our @EXPORT = qw(trim getScoresAsLongAsString applicationRunsWithRootRights);
 
 sub trim {
 	my $input = shift;
@@ -24,6 +24,11 @@ sub getScoresAsLongAsString {
 	}
 
 	return $result;
+}
+
+sub applicationRunsWithRootRights {
+	return 0 if ( $< != 0 );
+	return 1;
 }
 
 1;
