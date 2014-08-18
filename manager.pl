@@ -25,8 +25,8 @@ sub installCronScript {
 	die(colored("You need root access to add a new crontab fragment\n",'red')) if ( ! SSHManager::applicationRunsWithRootRights() );
 
 	my $distributorPath = getUserInput("Full path to distributor.pl","^.*distributor.pl\$");
-	my $executionInterval = getUserInput("Execution interval in minutes", "^[0-9]{1,2}\$");
-	my $endpoint = getUserInput("Endpoint", "^(http|local)\$");
+	my $executionInterval = getUserInput("Execution interval in minutes (0-59)", "^[0-9]{1,2}\$");
+	my $endpoint = getUserInput("Endpoint (http or local)", "^(http|local)\$");
 	my $location = getUserInput("Location", "^.*\$");
 
 	my $fileContent = <<EOS;
